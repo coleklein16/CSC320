@@ -1,0 +1,12 @@
+{
+    public static void main(String[] args) {
+        String firstName = "Cole", lastName = "Klein", 
+            streetAdress = "644 Cortona ln", city = "Georgetown";
+        int zipCode = 78628;
+        System.out.println(firstName);
+        System.out.println(lastName);
+        System.out.println(streetAdress);
+        System.out.println(city);
+        System.out.println(zipCode);
+    }
+}
