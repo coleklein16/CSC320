@@ -1,0 +1,104 @@
+import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+
+class Home {
+    private int square_feet;
+    private String address;
+    private String city;
+    private String state;
+    private int zip_code;
+    private String model_name;
+    private String sale_status;
+
+    // Constructor
+    public Home(int square_feet, String address, String city, String state, int zipCode, String modelName, String saleStatus) {
+        this.square_feet = square_feet;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip_code = zipCode;
+        this.model_name = modelName;
+        this.sale_status = saleStatus;
+    }
+
+    public String updateHome(String newSale) {
+        this.sale_status = newSale;
+        return "Home has been updated";
+    }
+
+    public String removeHome(int squareFeet, String homeAddress, String modelName, int homeZipCode) {
+        {
+
+            this.square_feet = 0;
+            this.address = "";
+            this.city = "";
+            this.state = "";
+            this.zip_code = 0;
+            this.model_name = "";
+            this.sale_status = "";
+
+            return "Home removed successfully.";
+        }
+    }
+
+    public String getHomeDetails() {
+        return "Model: " + model_name + ", Address: " + address + ", " + city + ", " + state + " " + zip_code +
+                ", Square Feet: " + square_feet + ", Status: " + sale_status;
+    }
+}
+
+    class HomeInventory {
+        private static Home home;
+
+        // Write to file on desktop
+        public static void saveToFile() {
+            try (FileWriter writer = new FileWriter(System.getProperty("user.home") + "/Desktop/Home.txt")) {
+                if (home != null) {
+                    writer.write(home.getHomeDetails() + "\n");
+                    System.out.println("Home saved.");
+                } else {
+                    System.out.println("No home to save.");
+                }
+            } catch (IOException e) {
+                System.out.println("Error saving.");
+            }}
+
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            // Add new home
+            home = new Home(17000, "644 Cortona Ln", "Georgetown", "TX", 78628, "Model A1", "Available");
+            System.out.println("Home added: " + home.getHomeDetails());
+
+            // Remove home
+            System.out.println("Removing home");
+            System.out.println(home.removeHome(17000, "644 Cortona Ln", "Model A1", 78628));
+
+            // Add second home
+            home = new Home(13000000, "11853 West 71st Ave", "Arvada", "CO", 80004, "Model A2", "Under Contract");
+            System.out.println("New home added: " + home.getHomeDetails());
+
+            // Update home
+            System.out.println("Updating home status");
+            System.out.println(home.updateHome("Sold"));
+            System.out.println("Updated home details: " + home.getHomeDetails());
+
+            // Take user input to see if they want to write to file
+            System.out.print("Do you want to save to a file? (Y/N): ");
+            String response = scanner.nextLine();
+
+            if (response.equals("Y")) {
+                saveToFile();
+            } else {
+                System.out.println("File not saved.");
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        } finally {
+            scanner.close();
+        }
+    }
+}
